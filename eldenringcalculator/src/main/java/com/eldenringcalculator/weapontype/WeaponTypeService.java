@@ -1,5 +1,13 @@
 package com.eldenringcalculator.weapontype;
 
-public class WeaponTypeService {
+import java.util.List;
+
+import com.eldenringcalculator.weapontype.model.WeaponTypeEntity;
+
+public interface WeaponTypeService {
+	
+	WeaponTypeEntity get(Long id);
+	
+	List<WeaponTypeEntity> findAll();
 
 }

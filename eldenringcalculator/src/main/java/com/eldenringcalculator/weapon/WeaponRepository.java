@@ -9,7 +9,7 @@ import com.eldenringcalculator.weapon.model.WeaponEntity;
 
 public interface WeaponRepository extends CrudRepository<WeaponEntity, Long>{
 	
-	@EntityGraph(attributePaths= {"weaponType.name"})
+	@EntityGraph(attributePaths= {"weaponType"})
 	List<WeaponEntity> findAll();
 
 }

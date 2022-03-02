@@ -9,6 +9,54 @@ public class WeaponDto {
 	private String name;
 	
 	private WeaponTypeDto weaponType;
+	
+	private int dexreq;
+	
+	private int strengreq;
+	
+	private int intreq;
+
+	/**
+	 * @return the dexreq
+	 */
+	public int getDexreq() {
+		return dexreq;
+	}
+
+	/**
+	 * @param dexreq the dexreq to set
+	 */
+	public void setDexreq(int dexreq) {
+		this.dexreq = dexreq;
+	}
+
+	/**
+	 * @return the strengreq
+	 */
+	public int getStrengreq() {
+		return strengreq;
+	}
+
+	/**
+	 * @param strengreq the strengreq to set
+	 */
+	public void setStrengreq(int strengreq) {
+		this.strengreq = strengreq;
+	}
+
+	/**
+	 * @return the intreq
+	 */
+	public int getIntreq() {
+		return intreq;
+	}
+
+	/**
+	 * @param intreq the intreq to set
+	 */
+	public void setIntreq(int intreq) {
+		this.intreq = intreq;
+	}
 
 	/**
 	 * @return the id

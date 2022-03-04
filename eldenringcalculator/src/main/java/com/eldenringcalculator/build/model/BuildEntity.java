@@ -36,11 +36,11 @@ public class BuildEntity {
 	private int intelect;
 	
 	@ManyToOne
-	@JoinColumn(name = "weapon1_id")
+	@JoinColumn(name = "weapon1")
 	private WeaponEntity weapon1;
 
 	@ManyToOne
-	@JoinColumn(name = "weapon2_id")
+	@JoinColumn(name = "weapon2")
 	private WeaponEntity weapon2;
 
 	/**

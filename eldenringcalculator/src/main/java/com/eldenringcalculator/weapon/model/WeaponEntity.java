@@ -24,7 +24,7 @@ public class WeaponEntity {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "weapontype_id", nullable = false)
+	@JoinColumn(name = "weapontype", nullable = false)
 	private WeaponTypeEntity weaponType;
 
 	@Column(name = "dexreq")

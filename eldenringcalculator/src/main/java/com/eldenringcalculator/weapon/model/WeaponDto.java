@@ -8,6 +8,8 @@ public class WeaponDto {
 	
 	private String name;
 	
+	private String photo;
+	
 	private WeaponTypeDto weaponType;
 	
 	private int dexreq;
@@ -98,6 +100,20 @@ public class WeaponDto {
 	 */
 	public void setWeaponType(WeaponTypeDto weaponType) {
 		this.weaponType = weaponType;
+	}
+
+	/**
+	 * @return the photo
+	 */
+	public String getPhoto() {
+		return photo;
+	}
+
+	/**
+	 * @param photo the photo to set
+	 */
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 }

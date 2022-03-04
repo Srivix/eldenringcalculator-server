@@ -23,6 +23,9 @@ public class WeaponEntity {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
+	@Column(name = "photo")
+	private String photo;
+	
 	@ManyToOne
 	@JoinColumn(name = "weapontype", nullable = false)
 	private WeaponTypeEntity weaponType;
@@ -118,6 +121,20 @@ public class WeaponEntity {
 	 */
 	public void setWeaponType(WeaponTypeEntity weaponType) {
 		this.weaponType = weaponType;
+	}
+
+	/**
+	 * @return the photo
+	 */
+	public String getPhoto() {
+		return photo;
+	}
+
+	/**
+	 * @param photo the photo to set
+	 */
+	public void setPhoto(String photo) {
+		this.photo = photo;
 	}
 
 }

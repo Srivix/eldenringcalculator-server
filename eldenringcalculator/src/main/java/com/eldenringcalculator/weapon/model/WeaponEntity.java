@@ -39,6 +39,33 @@ public class WeaponEntity {
 	@Column(name = "intreq")
 	private int intreq;
 	
+	@Column(name = "faithreq")
+	private int faithreq;
+	
+	@Column(name = "arcanereq")
+	private int arcanereq;
+	
+	@Column(name = "dexscaling")
+	private char dexscaling;
+	
+	@Column(name = "strengscaling")
+	private char strengscaling;
+	
+	@Column(name = "intscaling")
+	private char intscaling;
+	
+	@Column(name = "faithscaling")
+	private char faithscaling;
+	
+	@Column(name = "arcanescaling")
+	private char arcanescaling;
+	
+	@Column(name = "weight")
+	private float weight;
+	
+	@Column(name = "description")
+	private String description;
+	
 	/**
 	 * @return the dexreq
 	 */
@@ -135,6 +162,132 @@ public class WeaponEntity {
 	 */
 	public void setPhoto(String photo) {
 		this.photo = photo;
+	}
+
+	/**
+	 * @return the faithreq
+	 */
+	public int getFaithreq() {
+		return faithreq;
+	}
+
+	/**
+	 * @param faithreq the faithreq to set
+	 */
+	public void setFaithreq(int faithreq) {
+		this.faithreq = faithreq;
+	}
+
+	/**
+	 * @return the arcanereq
+	 */
+	public int getArcanereq() {
+		return arcanereq;
+	}
+
+	/**
+	 * @param arcanereq the arcanereq to set
+	 */
+	public void setArcanereq(int arcanereq) {
+		this.arcanereq = arcanereq;
+	}
+
+	/**
+	 * @return the dexscaling
+	 */
+	public char getDexscaling() {
+		return dexscaling;
+	}
+
+	/**
+	 * @param dexscaling the dexscaling to set
+	 */
+	public void setDexscaling(char dexscaling) {
+		this.dexscaling = dexscaling;
+	}
+
+	/**
+	 * @return the intscaling
+	 */
+	public char getIntscaling() {
+		return intscaling;
+	}
+
+	/**
+	 * @param intscaling the intscaling to set
+	 */
+	public void setIntscaling(char intscaling) {
+		this.intscaling = intscaling;
+	}
+
+	/**
+	 * @return the faithscaling
+	 */
+	public char getFaithscaling() {
+		return faithscaling;
+	}
+
+	/**
+	 * @param faithscaling the faithscaling to set
+	 */
+	public void setFaithscaling(char faithscaling) {
+		this.faithscaling = faithscaling;
+	}
+
+	/**
+	 * @return the arcanescaling
+	 */
+	public char getArcanescaling() {
+		return arcanescaling;
+	}
+
+	/**
+	 * @param arcanescaling the arcanescaling to set
+	 */
+	public void setArcanescaling(char arcanescaling) {
+		this.arcanescaling = arcanescaling;
+	}
+
+	/**
+	 * @return the weight
+	 */
+	public float getWeight() {
+		return weight;
+	}
+
+	/**
+	 * @param weight the weight to set
+	 */
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+	/**
+	 * @param description the description to set
+	 */
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	/**
+	 * @return the strengscaling
+	 */
+	public char getStrengscaling() {
+		return strengscaling;
+	}
+
+	/**
+	 * @param strengscaling the strengscaling to set
+	 */
+	public void setStrengscaling(char strengscaling) {
+		this.strengscaling = strengscaling;
 	}
 
 }

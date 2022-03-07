@@ -34,9 +34,9 @@ public class BuildServiceImpl implements BuildService{
 		else
 			build = this.buildRepository.findById(id).orElse(null);
 		
-		BeanUtils.copyProperties(dto, build, "id", "weapon1", "weapon2");
+		BeanUtils.copyProperties(dto, build, "id", "buildclass", "weapon1", "weapon2");
 		
-		if(validateRequirements(dto, build) && validateStats(build))
+		if(validateRequirements(dto, build) /*&& validateStats(build)*/)
 			this.buildRepository.save(build);
 	}
 	

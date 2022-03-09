@@ -3,9 +3,9 @@ package com.eldenringcalculator.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.devonfw.module.beanmapping.common.api.BeanMapper;
 import com.devonfw.module.beanmapping.common.base.BaseOrikaConfig;
 import com.devonfw.module.json.common.base.ObjectMapperFactory;
+import com.eldenringcalculator.config.mapper.BeanMapper;
 import com.eldenringcalculator.config.mapper.BeanMapperImpl;
 import com.fasterxml.jackson.databind.Module;
 
@@ -18,19 +18,22 @@ import ma.glasnost.orika.MapperFactory;
 @Configuration
 public class BeansOrikaConfig extends BaseOrikaConfig {
 
-	@Override
-	@Bean
-	public BeanMapper getBeanMapper() {
+   /**
+   * @return the {@link BeanMapper} implementation.
+   */
+   @Override
+   @Bean
+   public BeanMapper getBeanMapper() {
 
-		return new BeanMapperImpl();
-	}
+      return new BeanMapperImpl();
+   }
 
-	@Bean
-	public Module configureObjectMapper() {
+   @Bean
+   public Module configureObjectMapper() {
 
-		ObjectMapperFactory objectMapper = new ObjectMapperFactory();
-		return objectMapper.getExtensionModule();
+      ObjectMapperFactory objectMapper = new ObjectMapperFactory();
+      return objectMapper.getExtensionModule();
 
-	}
+   }
 
 }

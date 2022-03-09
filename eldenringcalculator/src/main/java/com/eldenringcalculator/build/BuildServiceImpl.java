@@ -4,10 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
+import com.eldenringcalculator.build.model.BuildSearchDto;
 import com.eldenringcalculator.weapon.WeaponService;
 
 @Service
@@ -23,6 +25,12 @@ public class BuildServiceImpl implements BuildService{
 	public List<BuildEntity> findAll() {
 
 		return this.buildRepository.findAll();
+	}
+	
+	@Override
+	public Page<BuildEntity> findPage(BuildSearchDto dto) {
+
+		return this.buildRepository.findAll(dto.getPageable());
 	}
 
 	@Override

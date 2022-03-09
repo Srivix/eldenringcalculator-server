@@ -2,13 +2,18 @@ package com.eldenringcalculator.build;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
+import com.eldenringcalculator.build.model.BuildSearchDto;
 
 public interface BuildService {
 	
 	List<BuildEntity> findAll();
 	
 	void save(Long id, BuildDto dto);
+	
+	Page<BuildEntity> findPage(BuildSearchDto dto);
 
 }

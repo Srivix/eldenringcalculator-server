@@ -12,6 +12,7 @@ public class BeanMapperImpl extends BeanMapperImplOrika implements BeanMapper {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public <T> Page<T> mapPage(Page<?> source, Class<T> targetClass) {
 
 		if (source == null) {

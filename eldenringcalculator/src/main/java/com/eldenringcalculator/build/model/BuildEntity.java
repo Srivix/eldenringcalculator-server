@@ -1,5 +1,7 @@
 package com.eldenringcalculator.build.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,7 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.eldenringcalculator.buildclass.model.BuildClassEntity;
+import com.eldenringcalculator.user.model.UserEntity;
 import com.eldenringcalculator.weapon.model.WeaponEntity;
 
 @Entity
@@ -71,7 +76,17 @@ public class BuildEntity {
 	@ManyToOne
 	@JoinColumn(name = "weapon2")
 	private WeaponEntity weapon2;
+	
+	@ManyToOne
+	@JoinColumn(name = "createdby")
+	private UserEntity createdby;
 
+	@Column(name = "created")
+	private Date created;
+	
+	@Column(name = "state")
+	private int state;
+	
 	/**
 	 * @return the id
 	 */
@@ -308,5 +323,47 @@ public class BuildEntity {
 	 */
 	public void setArcane(int arcane) {
 		this.arcane = arcane;
+	}
+
+	/**
+	 * @return the createdBy
+	 */
+	public UserEntity getCreatedby() {
+		return createdby;
+	}
+
+	/**
+	 * @param createdBy the createdBy to set
+	 */
+	public void setCreatedby(UserEntity createdby) {
+		this.createdby = createdby;
+	}
+
+	/**
+	 * @return the created
+	 */
+	public Date getCreated() {
+		return created;
+	}
+
+	/**
+	 * @param created the created to set
+	 */
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public int getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(int state) {
+		this.state = state;
 	}
 }

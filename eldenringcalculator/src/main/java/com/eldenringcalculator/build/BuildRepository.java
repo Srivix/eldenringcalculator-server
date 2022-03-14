@@ -14,11 +14,11 @@ public interface BuildRepository  extends CrudRepository<BuildEntity, Long>{
 	
 	//@Query("select b from Build b")
 	@EntityGraph(attributePaths = {"weapon1", "weapon2",
-			"weapon1.weaponType", "weapon2.weaponType", "buildclass"})
+			"weapon1.weaponType", "weapon2.weaponType", "buildclass", "createdby", "createdby.role"})
 	Page<BuildEntity> findAll(Pageable pageable);
 	
 	@EntityGraph(attributePaths = {"weapon1", "weapon2",
-			"weapon1.weaponType", "weapon2.weaponType", "buildclass"})
+			"weapon1.weaponType", "weapon2.weaponType", "buildclass", "createdby", "createdby.role"})
 	List<BuildEntity> findAll();
 
 }

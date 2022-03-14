@@ -1,7 +1,11 @@
 package com.eldenringcalculator.build.model;
 
+import java.util.Date;
+
 import com.eldenringcalculator.buildclass.model.BuildClassDto;
+import com.eldenringcalculator.user.model.UserDto;
 import com.eldenringcalculator.weapon.model.WeaponDto;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class BuildDto {
 	
@@ -22,7 +26,53 @@ public class BuildDto {
 	private int arcane;
 	private WeaponDto weapon1;
 	private WeaponDto weapon2;
+	private UserDto createdby;
+	@JsonFormat(pattern = "dd-MM-yyyy")
+	private Date created;
+	private int state;
 	
+	/**
+	 * @return the createdby
+	 */
+	public UserDto getCreatedby() {
+		return createdby;
+	}
+
+	/**
+	 * @param createdby the createdby to set
+	 */
+	public void setCreatedby(UserDto createdby) {
+		this.createdby = createdby;
+	}
+
+	/**
+	 * @return the created
+	 */
+	public Date getCreated() {
+		return created;
+	}
+
+	/**
+	 * @param created the created to set
+	 */
+	public void setCreated(Date created) {
+		this.created = created;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public int getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(int state) {
+		this.state = state;
+	}
+
 	/**
 	 * @return the id
 	 */

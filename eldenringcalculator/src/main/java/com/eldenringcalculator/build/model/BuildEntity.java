@@ -11,9 +11,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.eldenringcalculator.buildclass.model.BuildClassEntity;
+import com.eldenringcalculator.buildstate.model.BuildStateEntity;
 import com.eldenringcalculator.user.model.UserEntity;
 import com.eldenringcalculator.weapon.model.WeaponEntity;
 
@@ -84,8 +83,9 @@ public class BuildEntity {
 	@Column(name = "created")
 	private Date created;
 	
-	@Column(name = "state")
-	private int state;
+	@ManyToOne
+	@JoinColumn(name = "state")
+	private BuildStateEntity state;
 	
 	/**
 	 * @return the id
@@ -356,14 +356,14 @@ public class BuildEntity {
 	/**
 	 * @return the state
 	 */
-	public int getState() {
+	public BuildStateEntity getState() {
 		return state;
 	}
 
 	/**
 	 * @param state the state to set
 	 */
-	public void setState(int state) {
+	public void setState(BuildStateEntity state) {
 		this.state = state;
 	}
 }

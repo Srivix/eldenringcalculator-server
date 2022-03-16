@@ -3,6 +3,7 @@ package com.eldenringcalculator.build.model;
 import java.util.Date;
 
 import com.eldenringcalculator.buildclass.model.BuildClassDto;
+import com.eldenringcalculator.buildstate.model.BuildStateDto;
 import com.eldenringcalculator.user.model.UserDto;
 import com.eldenringcalculator.weapon.model.WeaponDto;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -29,7 +30,7 @@ public class BuildDto {
 	private UserDto createdby;
 	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date created;
-	private int state;
+	private BuildStateDto state;
 	
 	/**
 	 * @return the createdby
@@ -62,14 +63,14 @@ public class BuildDto {
 	/**
 	 * @return the state
 	 */
-	public int getState() {
+	public BuildStateDto getState() {
 		return state;
 	}
 
 	/**
 	 * @param state the state to set
 	 */
-	public void setState(int state) {
+	public void setState(BuildStateDto state) {
 		this.state = state;
 	}
 

@@ -1,5 +1,8 @@
 package com.eldenringcalculator.build;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.BeanUtils;
@@ -29,8 +32,31 @@ public class BuildServiceImpl implements BuildService{
 	
 	@Override
 	public Page<BuildEntity> findPage(BuildSearchDto dto) {
+		
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-		return this.buildRepository.findAll(dto.getPageable());
+        Date startDate;
+
+        Date endDate;
+		
+		 try {
+	            if (dto.getStartDate() == null)
+	                startDate = format.parse("2020-01-01");
+	            else
+	                startDate = dto.getStartDate();
+
+	            if (dto.getEndDate() == null)
+	                endDate = format.parse("2099-12-31");
+	            else
+	                endDate = dto.getEndDate();
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	            startDate = null;
+	            endDate = null;
+	        }
+		
+		return this.buildRepository.find(dto.getUsername(), dto.getName(), dto.getWeapon1name(),
+				dto.getWeapon2name(), startDate, endDate,dto.getPageable());
 	}
 
 	@Override

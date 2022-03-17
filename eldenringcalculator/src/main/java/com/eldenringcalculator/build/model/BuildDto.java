@@ -28,7 +28,6 @@ public class BuildDto {
 	private WeaponDto weapon1;
 	private WeaponDto weapon2;
 	private UserDto createdby;
-	@JsonFormat(pattern = "dd-MM-yyyy")
 	private Date created;
 	private BuildStateDto state;
 	

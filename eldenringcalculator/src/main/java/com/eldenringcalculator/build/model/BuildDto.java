@@ -6,7 +6,6 @@ import com.eldenringcalculator.buildclass.model.BuildClassDto;
 import com.eldenringcalculator.buildstate.model.BuildStateDto;
 import com.eldenringcalculator.user.model.UserDto;
 import com.eldenringcalculator.weapon.model.WeaponDto;
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class BuildDto {
 	
@@ -14,12 +13,6 @@ public class BuildDto {
 	private String name;
 	private BuildClassDto buildclass;
 	private int level;
-	private int hp;
-	private int fp;
-	private int stamina;
-	private int vigor;
-	private int mind;
-	private int endurance;
 	private int dexterity;	
 	private int strength;
 	private int intelect;
@@ -199,89 +192,6 @@ public class BuildDto {
 		this.buildclass = buildclass;
 	}
 
-	/**
-	 * @return the hp
-	 */
-	public int getHp() {
-		return hp;
-	}
-
-	/**
-	 * @param hp the hp to set
-	 */
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-
-	/**
-	 * @return the fp
-	 */
-	public int getFp() {
-		return fp;
-	}
-
-	/**
-	 * @param fp the fp to set
-	 */
-	public void setFp(int fp) {
-		this.fp = fp;
-	}
-
-	/**
-	 * @return the stamina
-	 */
-	public int getStamina() {
-		return stamina;
-	}
-
-	/**
-	 * @param stamina the stamina to set
-	 */
-	public void setStamina(int stamina) {
-		this.stamina = stamina;
-	}
-
-	/**
-	 * @return the vigor
-	 */
-	public int getVigor() {
-		return vigor;
-	}
-
-	/**
-	 * @param vigor the vigor to set
-	 */
-	public void setVigor(int vigor) {
-		this.vigor = vigor;
-	}
-
-	/**
-	 * @return the mind
-	 */
-	public int getMind() {
-		return mind;
-	}
-
-	/**
-	 * @param mind the mind to set
-	 */
-	public void setMind(int mind) {
-		this.mind = mind;
-	}
-
-	/**
-	 * @return the endurance
-	 */
-	public int getEndurance() {
-		return endurance;
-	}
-
-	/**
-	 * @param endurance the endurance to set
-	 */
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
-	}
 
 	/**
 	 * @return the faith

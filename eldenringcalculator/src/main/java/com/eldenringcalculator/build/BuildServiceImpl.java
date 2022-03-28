@@ -13,6 +13,9 @@ import org.springframework.stereotype.Service;
 import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
 import com.eldenringcalculator.build.model.BuildSearchDto;
+import com.eldenringcalculator.buildclass.BuildClassService;
+import com.eldenringcalculator.buildstate.BuildStateService;
+import com.eldenringcalculator.user.UserService;
 import com.eldenringcalculator.weapon.WeaponService;
 
 @Service
@@ -22,7 +25,16 @@ public class BuildServiceImpl implements BuildService{
 	BuildRepository buildRepository;
 	
 	@Autowired
+	BuildStateService buildStateService;
+	
+	@Autowired
 	WeaponService weaponService;
+	
+	@Autowired
+	UserService userService;
+	
+	@Autowired
+	BuildClassService buildClassService;
 	
 	@Override
 	public List<BuildEntity> findAll() {
@@ -68,10 +80,15 @@ public class BuildServiceImpl implements BuildService{
 		else
 			build = this.buildRepository.findById(id).orElse(null);
 		
-		BeanUtils.copyProperties(dto, build, "id", "buildclass", "weapon1", "weapon2");
+		BeanUtils.copyProperties(dto, build, "id", "buildclass", "weapon1", "weapon2", "createdby", "state");
+
+		build.setCreatedby(userService.get(dto.getCreatedby().getUsername()));
+		build.setState(buildStateService.get(dto.getState().getName()));
+		build.setBuildclass(buildClassService.get(dto.getBuildclass().getId()));
+		build.setWeapon1(weaponService.get(dto.getWeapon1().getId()));
+		build.setWeapon2(weaponService.get(dto.getWeapon2().getId()));
 		
-		if(validateRequirements(dto, build) /*&& validateStats(build)*/)
-			this.buildRepository.save(build);
+		this.buildRepository.save(build);
 	}
 	
 	public Boolean validateRequirements(BuildDto dto, BuildEntity build) {

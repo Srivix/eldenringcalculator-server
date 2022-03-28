@@ -35,24 +35,6 @@ public class BuildEntity {
 	@Column(name = "level")
 	private int level;
 	
-	@Column(name = "hp")
-	private int hp;
-	
-	@Column(name = "fp")
-	private int fp;
-	
-	@Column(name = "stamina")
-	private int stamina;
-	
-	@Column(name = "vigor")
-	private int vigor;
-	
-	@Column(name = "mind")
-	private int mind;
-	
-	@Column(name = "endurance")
-	private int endurance;
-
 	@Column(name = "dexterity")
 	private int dexterity;
 	
@@ -211,90 +193,6 @@ public class BuildEntity {
 	 */
 	public void setBuildclass(BuildClassEntity buildclass) {
 		this.buildclass = buildclass;
-	}
-
-	/**
-	 * @return the hp
-	 */
-	public int getHp() {
-		return hp;
-	}
-
-	/**
-	 * @param hp the hp to set
-	 */
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-
-	/**
-	 * @return the fp
-	 */
-	public int getFp() {
-		return fp;
-	}
-
-	/**
-	 * @param fp the fp to set
-	 */
-	public void setFp(int fp) {
-		this.fp = fp;
-	}
-
-	/**
-	 * @return the stamina
-	 */
-	public int getStamina() {
-		return stamina;
-	}
-
-	/**
-	 * @param stamina the stamina to set
-	 */
-	public void setStamina(int stamina) {
-		this.stamina = stamina;
-	}
-
-	/**
-	 * @return the vigor
-	 */
-	public int getVigor() {
-		return vigor;
-	}
-
-	/**
-	 * @param vigor the vigor to set
-	 */
-	public void setVigor(int vigor) {
-		this.vigor = vigor;
-	}
-
-	/**
-	 * @return the mind
-	 */
-	public int getMind() {
-		return mind;
-	}
-
-	/**
-	 * @param mind the mind to set
-	 */
-	public void setMind(int mind) {
-		this.mind = mind;
-	}
-
-	/**
-	 * @return the endurance
-	 */
-	public int getEndurance() {
-		return endurance;
-	}
-
-	/**
-	 * @param endurance the endurance to set
-	 */
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
 	}
 
 	/**

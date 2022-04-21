@@ -14,7 +14,7 @@
 	<description>Calculadora de estadisticas</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>1.11</java.version>
 		<devon4j.version>2021.04.003</devon4j.version>
 	</properties>
 

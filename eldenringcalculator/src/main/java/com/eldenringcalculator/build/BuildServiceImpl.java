@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
+import com.eldenringcalculator.build.model.BuildSearchByUserDto;
 import com.eldenringcalculator.build.model.BuildSearchDto;
 import com.eldenringcalculator.buildclass.BuildClassService;
 import com.eldenringcalculator.buildstate.BuildStateService;
@@ -67,7 +68,7 @@ public class BuildServiceImpl implements BuildService{
 	            endDate = null;
 	        }
 		
-		return this.buildRepository.find(dto.getUsername(), dto.getName(), dto.getWeapon1name(),
+		return this.buildRepository.findPublicPage(dto.getUsername(), dto.getName(), dto.getWeapon1name(),
 				dto.getWeapon2name(), startDate, endDate,dto.getPageable());
 	}
 
@@ -120,6 +121,34 @@ public class BuildServiceImpl implements BuildService{
 			System.out.println("La suma de atributos no suma con el nivel.");
 			return false;
 		}
+	}
+
+	@Override
+	public Page<BuildEntity> findPageOfUser(String username, BuildSearchByUserDto dto) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+
+        Date startDate;
+
+        Date endDate;
+		
+		 try {
+	            if (dto.getStartDate() == null)
+	                startDate = format.parse("2020-01-01");
+	            else
+	                startDate = dto.getStartDate();
+
+	            if (dto.getEndDate() == null)
+	                endDate = format.parse("2099-12-31");
+	            else
+	                endDate = dto.getEndDate();
+	        } catch (ParseException e) {
+	            e.printStackTrace();
+	            startDate = null;
+	            endDate = null;
+	        }
+		
+		return this.buildRepository.findPageOfUser(username, dto.getName(), dto.getWeapon1name(),
+				dto.getWeapon2name(), startDate, endDate,dto.getPageable());
 	}
 
 }

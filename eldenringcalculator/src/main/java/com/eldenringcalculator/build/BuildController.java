@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eldenringcalculator.build.model.BuildDto;
+import com.eldenringcalculator.build.model.BuildSearchByUserDto;
 import com.eldenringcalculator.build.model.BuildSearchDto;
 import com.eldenringcalculator.config.mapper.BeanMapper;
 
@@ -41,5 +42,11 @@ public class BuildController {
 	public Page<BuildDto> findPage(@RequestBody BuildSearchDto dto){
 		
 		return this.beanMapper.mapPage(buildService.findPage(dto), BuildDto.class);
+	}
+	
+	@RequestMapping(path = "/{username}", method = RequestMethod.POST)
+	public Page<BuildDto> findPageOfUser(@PathVariable(name = "username") String username, @RequestBody BuildSearchByUserDto dto){
+		
+		return this.beanMapper.mapPage(buildService.findPageOfUser(username, dto), BuildDto.class);
 	}
 }

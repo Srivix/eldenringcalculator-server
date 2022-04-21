@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 
 import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
+import com.eldenringcalculator.build.model.BuildSearchByUserDto;
 import com.eldenringcalculator.build.model.BuildSearchDto;
 
 public interface BuildService {
@@ -15,5 +16,7 @@ public interface BuildService {
 	void save(Long id, BuildDto dto);
 	
 	Page<BuildEntity> findPage(BuildSearchDto dto);
+
+	Page<BuildEntity> findPageOfUser(String username, BuildSearchByUserDto dto);
 
 }

@@ -24,10 +24,9 @@ public class BuildController {
 	@Autowired
 	BeanMapper beanMapper;
 	
-	@RequestMapping(path = {"", "/{id}"}, method = RequestMethod.PUT)
-	public void save(@PathVariable(name = "id", required = false) Long id, @RequestBody BuildDto dto) {
-		
-		this.buildService.save(id, dto);
+	@RequestMapping(path = {"", "/{username}/{id}"}, method = RequestMethod.PUT)
+	public void save(@PathVariable(name = "id", required = false) Long id,@PathVariable(name = "username") String username, @RequestBody BuildDto dto) {
+		this.buildService.save(id, dto, username);
 	}
 	
 	@RequestMapping(path = "", method = RequestMethod.POST)

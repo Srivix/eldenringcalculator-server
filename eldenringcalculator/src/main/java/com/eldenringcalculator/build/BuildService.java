@@ -8,7 +8,7 @@ import com.eldenringcalculator.build.model.BuildSearchDto;
 
 public interface BuildService {
 	
-	void save(Long id, BuildDto dto);
+	void save(Long id, BuildDto dto, String author);
 	
 	Page<BuildEntity> findPage(BuildSearchDto dto);
 

@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -20,6 +22,8 @@ import com.eldenringcalculator.weapon.WeaponService;
 
 @Service
 public class BuildServiceImpl implements BuildService{
+	
+	private static final Logger logger = LoggerFactory.getLogger(BuildServiceImpl.class);
 
 	@Autowired
 	BuildRepository buildRepository;
@@ -90,54 +94,69 @@ public class BuildServiceImpl implements BuildService{
 	}
 
 	@Override
-	public void save(Long id, BuildDto dto) {
+	public void save(Long id, BuildDto dto, String author) {
 		BuildEntity build = null;
+		Boolean validateRequirements = false;
+		Boolean validateStats = false;
+		
+		System.out.println("El creador es: "+author);
 		
 		if(id == null)
 			build = new BuildEntity();
 		else
 			build = this.buildRepository.findById(id).orElse(null);
 		
-		BeanUtils.copyProperties(dto, build, "id", "buildclass", "weapon1", "weapon2", "createdby", "state");
-
-		build.setCreatedby(userService.findByUsername(dto.getCreatedby().getUsername()));
-		build.setState(buildStateService.findByName(dto.getState().getName()));
-		build.setBuildclass(buildClassService.findById(dto.getBuildclass().getId()));
-		build.setWeapon1(weaponService.get(dto.getWeapon1().getId()));
-		build.setWeapon2(weaponService.get(dto.getWeapon2().getId()));
+		validateRequirements = validateRequirements(dto);
+		validateStats = validateStats(dto);
 		
-		this.buildRepository.save(build);
+		if(validateRequirements && validateStats) {
+			
+			BeanUtils.copyProperties(dto, build, "id", "buildclass", "weapon1", "weapon2", "createdby", "state");
+	
+			build.setCreatedby(userService.findByUsername(author));
+			build.setState(buildStateService.findByName(dto.getState().getName()));
+			build.setBuildclass(buildClassService.findById(dto.getBuildclass().getId()));
+			build.setWeapon1(weaponService.get(dto.getWeapon1().getId()));
+			build.setWeapon2(weaponService.get(dto.getWeapon2().getId()));
+		
+			this.buildRepository.save(build);
+		}
 	}
 	
-	public Boolean validateRequirements(BuildDto dto, BuildEntity build) {
+	public Boolean validateRequirements(BuildDto build) {
 		
-		if(dto.getWeapon1()!=null)
-			if(build.getDexterity()>=dto.getWeapon1().getDexreq() && build.getStrength()>=dto.getWeapon1().getStrengreq() && build.getIntelect()>=dto.getWeapon1().getIntreq())
-				build.setWeapon1(weaponService.get(dto.getWeapon1().getId()));
-			else {
-				System.out.println("Te falta estadistica en el arma 1 para poder equiparla");
+		if(build.getWeapon1()!=null)
+			if(build.getDexterity()<build.getWeapon1().getDexreq() || build.getStrength()<build.getWeapon1().getStrengreq() || build.getIntelect()<build.getWeapon1().getIntreq() 
+					|| build.getArcane()<build.getWeapon1().getArcanereq() || build.getFaith()<build.getWeapon1().getFaithreq()) {
+				logger.info("Te falta estadistica en el arma 1 para poder equiparla");
 				return false;
 			}
 
-		if(dto.getWeapon2()!=null)
-			if(build.getDexterity()>=dto.getWeapon2().getDexreq() && build.getStrength()>=dto.getWeapon2().getStrengreq() && build.getIntelect()>=dto.getWeapon2().getIntreq())
-				build.setWeapon2(weaponService.get(dto.getWeapon2().getId()));
-			else {
-				System.out.println("Te falta estadistica en el arma 2 para poder equiparla");
+
+		if(build.getWeapon2()!=null)
+			if(build.getDexterity()<build.getWeapon2().getDexreq() || build.getStrength()<build.getWeapon2().getStrengreq() || build.getIntelect()<build.getWeapon2().getIntreq() 
+					|| build.getArcane()<build.getWeapon2().getArcanereq() || build.getFaith()<build.getWeapon2().getFaithreq()) {
+				logger.info("Te falta estadistica en el arma 1 para poder equiparla");
 				return false;
 			}
 		
 		return true;
 	}
 	
-	public Boolean validateStats(BuildEntity build) {
+	public Boolean validateStats(BuildDto build) {
 		
-		if(build.getDexterity()+build.getIntelect()+build.getStrength()==build.getLevel())		
+		Integer buildClassStatsCount = build.getBuildclass().getDexterity()+build.getBuildclass().getStrength()
+				+build.getBuildclass().getIntelect()+build.getBuildclass().getFaith()+build.getBuildclass().getArcane();
+		
+		Integer buildStatsCount = (build.getDexterity()+build.getIntelect()+build.getStrength()+build.getFaith()+build.getArcane())-buildClassStatsCount;
+		
+		Integer buildLevel = build.getLevel()-build.getBuildclass().getLevel();
+		
+		if(buildStatsCount == buildLevel)		
 			return true;
-		else {
-			System.out.println("La suma de atributos no suma con el nivel.");
-			return false;
-		}
+		
+		logger.info("La suma de atributos no suma con el nivel.");
+		return false;
 	}
 
 }

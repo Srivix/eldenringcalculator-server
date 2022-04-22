@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 	UserRepository userRepository;
 
 	@Override
-	public UserEntity get(String username) {
+	public UserEntity findByUsername(String username) {
 		return this.userRepository.findByUsername(username);
 	}
 
@@ -30,7 +30,6 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 		UserEntity user = userRepository.findByUsername(username);
 		
 		if(user == null) {
-			System.out.println("Error login no se encuentra usuario"+username);
 			throw new UsernameNotFoundException("Excepcion Error login no se encuentra usuario"+username);
 		}
 		

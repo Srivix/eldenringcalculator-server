@@ -1,4 +1,4 @@
-package com.eldenringcalculator.weapon;
+package com.eldenringcalculator.file;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

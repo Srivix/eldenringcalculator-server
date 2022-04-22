@@ -4,6 +4,6 @@ import com.eldenringcalculator.user.model.UserEntity;
 
 public interface UserService {
 
-	UserEntity get(String username);
+	UserEntity findByUsername(String username);
 
 }

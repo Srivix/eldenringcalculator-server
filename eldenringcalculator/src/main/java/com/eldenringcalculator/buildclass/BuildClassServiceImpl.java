@@ -20,7 +20,7 @@ public class BuildClassServiceImpl implements BuildClassService{
 	}
 
 	@Override
-	public BuildClassEntity get(Long id) {
+	public BuildClassEntity findById(Long id) {
 		return this.buildClassRepository.findById(id).orElse(null);
 	}
 	

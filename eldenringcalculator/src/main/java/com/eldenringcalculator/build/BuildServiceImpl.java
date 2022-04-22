@@ -3,7 +3,7 @@ package com.eldenringcalculator.build;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+import java.util.HashMap;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
 import com.eldenringcalculator.build.model.BuildSearchDto;
-import com.eldenringcalculator.build.model.BuildSearchOfUserDto;
 import com.eldenringcalculator.buildclass.BuildClassService;
 import com.eldenringcalculator.buildstate.BuildStateService;
 import com.eldenringcalculator.user.UserService;
@@ -38,38 +37,56 @@ public class BuildServiceImpl implements BuildService{
 	BuildClassService buildClassService;
 	
 	@Override
-	public List<BuildEntity> findAll() {
-
-		return this.buildRepository.findAll();
+	public Page<BuildEntity> findPage(BuildSearchDto dto) {
+		
+		HashMap<String, Date> dates = processDates(dto.getStartDate(), dto.getEndDate());
+		
+		return this.buildRepository.findPublicPage(dto.getUsername(), dto.getName(), dto.getWeapon1name(),
+				dto.getWeapon2name(), dates.get("startDate"), dates.get("endDate"),dto.getPageable());
 	}
 	
 	@Override
-	public Page<BuildEntity> findPage(BuildSearchDto dto) {
+	public Page<BuildEntity> findPageOfUser(String username, BuildSearchDto dto) {
 		
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		HashMap<String, Date> dates = processDates(dto.getStartDate(), dto.getEndDate());
+		
+		return this.buildRepository.findPageOfUser(username, dto.getName(), dto.getWeapon1name(),
+				dto.getWeapon2name(), dates.get("startDate"), dates.get("endDate"), dto.getState(), dto.getPageable());
+	}
+	
+	@Override
+	public Page<BuildEntity> findPageOfAllBuilds(BuildSearchDto dto) {
+		
+		HashMap<String, Date> dates = processDates(dto.getStartDate(), dto.getEndDate());
 
-        Date startDate;
+		return this.buildRepository.findPageOfAllBuilds(dto.getUsername(), dto.getName(), dto.getWeapon1name(),
+				dto.getWeapon2name(), dates.get("startDate"), dates.get("endDate"), dto.getState(), dto.getPageable());
+	}
+	
+	public HashMap<String,Date> processDates(Date startDate, Date endDate){
+		
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-        Date endDate;
+		HashMap<String,Date> dates = new HashMap<String,Date>();
 		
 		 try {
-	            if (dto.getStartDate() == null)
-	                startDate = format.parse("2020-01-01");
+	            if (startDate == null)
+	                dates.put("startDate",format.parse("2020-01-01"));
 	            else
-	                startDate = dto.getStartDate();
+	                dates.put("startDate",startDate);
 
-	            if (dto.getEndDate() == null)
-	                endDate = format.parse("2099-12-31");
+	            if (endDate == null)
+	                dates.put("endDate",format.parse("2099-12-31"));
 	            else
-	                endDate = dto.getEndDate();
+	                dates.put("endDate",endDate);
+	            
 	        } catch (ParseException e) {
 	            e.printStackTrace();
-	            startDate = null;
-	            endDate = null;
+	            dates.put("startDate",startDate);
+	            dates.put("endDate",endDate);
 	        }
-		
-		return this.buildRepository.findPublicPage(dto.getUsername(), dto.getName(), dto.getWeapon1name(),
-				dto.getWeapon2name(), startDate, endDate,dto.getPageable());
+		 
+		 return dates;
 	}
 
 	@Override
@@ -83,9 +100,9 @@ public class BuildServiceImpl implements BuildService{
 		
 		BeanUtils.copyProperties(dto, build, "id", "buildclass", "weapon1", "weapon2", "createdby", "state");
 
-		build.setCreatedby(userService.get(dto.getCreatedby().getUsername()));
-		build.setState(buildStateService.get(dto.getState().getName()));
-		build.setBuildclass(buildClassService.get(dto.getBuildclass().getId()));
+		build.setCreatedby(userService.findByUsername(dto.getCreatedby().getUsername()));
+		build.setState(buildStateService.findByName(dto.getState().getName()));
+		build.setBuildclass(buildClassService.findById(dto.getBuildclass().getId()));
 		build.setWeapon1(weaponService.get(dto.getWeapon1().getId()));
 		build.setWeapon2(weaponService.get(dto.getWeapon2().getId()));
 		
@@ -121,34 +138,6 @@ public class BuildServiceImpl implements BuildService{
 			System.out.println("La suma de atributos no suma con el nivel.");
 			return false;
 		}
-	}
-
-	@Override
-	public Page<BuildEntity> findPageOfUser(String username, BuildSearchOfUserDto dto) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-        Date startDate;
-
-        Date endDate;
-		
-		 try {
-	            if (dto.getStartDate() == null)
-	                startDate = format.parse("2020-01-01");
-	            else
-	                startDate = dto.getStartDate();
-
-	            if (dto.getEndDate() == null)
-	                endDate = format.parse("2099-12-31");
-	            else
-	                endDate = dto.getEndDate();
-	        } catch (ParseException e) {
-	            e.printStackTrace();
-	            startDate = null;
-	            endDate = null;
-	        }
-		
-		return this.buildRepository.findPageOfUser(username, dto.getName(), dto.getWeapon1name(),
-				dto.getWeapon2name(), startDate, endDate,dto.getPageable());
 	}
 
 }

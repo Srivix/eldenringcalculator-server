@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.devonfw.module.beanmapping.common.api.BeanMapper;
+import com.eldenringcalculator.file.UploadFileService;
 import com.eldenringcalculator.weapon.model.WeaponDto;
 
 @RequestMapping(value = "/weapon")

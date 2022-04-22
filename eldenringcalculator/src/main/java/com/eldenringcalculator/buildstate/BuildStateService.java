@@ -4,6 +4,6 @@ import com.eldenringcalculator.buildstate.model.BuildStateEntity;
 
 public interface BuildStateService {
 	
-	BuildStateEntity get(String state);
+	BuildStateEntity findByName(String state);
 
 }

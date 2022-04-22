@@ -13,6 +13,7 @@ public class BuildSearchDto {
 	private String weapon2name;
 	private Date startDate;
 	private Date endDate;
+	private String state;
 	
     /**
     * @return pageable
@@ -112,6 +113,20 @@ public class BuildSearchDto {
 	 */
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
+	}
+
+	/**
+	 * @return the state
+	 */
+	public String getState() {
+		return state;
+	}
+
+	/**
+	 * @param state the state to set
+	 */
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 }

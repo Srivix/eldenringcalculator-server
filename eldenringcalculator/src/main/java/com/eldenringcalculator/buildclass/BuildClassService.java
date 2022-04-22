@@ -8,6 +8,6 @@ public interface BuildClassService {
 	
 	List<BuildClassEntity> findAll();
 	
-	BuildClassEntity get(Long id);
+	BuildClassEntity findById(Long id);
 
 }

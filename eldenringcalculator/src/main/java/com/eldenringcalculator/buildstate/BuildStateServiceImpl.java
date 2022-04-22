@@ -12,7 +12,7 @@ public class BuildStateServiceImpl implements BuildStateService{
 	BuildStateRepository buildStateRepository;
 	
 	@Override
-	public BuildStateEntity get(String state) {
+	public BuildStateEntity findByName(String state) {
 		return this.buildStateRepository.findByName(state).orElse(null);
 	}
 

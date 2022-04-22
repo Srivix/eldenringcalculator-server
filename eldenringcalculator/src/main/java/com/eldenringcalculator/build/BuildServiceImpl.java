@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 
 import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
-import com.eldenringcalculator.build.model.BuildSearchByUserDto;
 import com.eldenringcalculator.build.model.BuildSearchDto;
+import com.eldenringcalculator.build.model.BuildSearchOfUserDto;
 import com.eldenringcalculator.buildclass.BuildClassService;
 import com.eldenringcalculator.buildstate.BuildStateService;
 import com.eldenringcalculator.user.UserService;
@@ -124,7 +124,7 @@ public class BuildServiceImpl implements BuildService{
 	}
 
 	@Override
-	public Page<BuildEntity> findPageOfUser(String username, BuildSearchByUserDto dto) {
+	public Page<BuildEntity> findPageOfUser(String username, BuildSearchOfUserDto dto) {
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Date startDate;

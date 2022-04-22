@@ -1,13 +1,19 @@
 package com.eldenringcalculator.user.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 
@@ -35,9 +41,11 @@ public class UserEntity {
 	@Column(name = "password")
 	private String password;
 	
-	@ManyToOne
-	@JoinColumn(name = "role")
-	private RoleEntity role;
+	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name="user_id"),
+	inverseJoinColumns=@JoinColumn(name="role_id"),
+	uniqueConstraints = {@UniqueConstraint(columnNames= {"user_id","role_id"})})
+	private List<RoleEntity> roles;
 
 	/**
 	 * @return the id
@@ -82,20 +90,6 @@ public class UserEntity {
 	}
 
 	/**
-	 * @return the role
-	 */
-	public RoleEntity getRole() {
-		return role;
-	}
-
-	/**
-	 * @param role the role to set
-	 */
-	public void setRole(RoleEntity role) {
-		this.role = role;
-	}
-
-	/**
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -107,6 +101,20 @@ public class UserEntity {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * @return the role
+	 */
+	public List<RoleEntity> getRoles() {
+		return roles;
+	}
+
+	/**
+	 * @param role the role to set
+	 */
+	public void setRoles(List<RoleEntity> roles) {
+		this.roles = roles;
 	}
 
 }

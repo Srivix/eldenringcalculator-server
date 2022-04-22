@@ -1,12 +1,14 @@
 package com.eldenringcalculator.user.model;
 
+import java.util.List;
+
 import com.eldenringcalculator.role.model.RoleDto;
 
 public class UserDto {
 	
 	private String email;
 	private String username;
-	private RoleDto role;
+	private List<RoleDto> role;
 	
 	/**
 	 * @return the username
@@ -23,14 +25,14 @@ public class UserDto {
 	/**
 	 * @return the role
 	 */
-	public RoleDto getRole() {
+	public List<RoleDto> getRoles() {
 		return role;
 	}
 	/**
 	 * @param role the role to set
 	 */
-	public void setRole(RoleDto role) {
-		this.role = role;
+	public void setRoles(List<RoleDto> roles) {
+		this.role = roles;
 	}
 	/**
 	 * @return the email

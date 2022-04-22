@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.eldenringcalculator.build.model.BuildDto;
-import com.eldenringcalculator.build.model.BuildSearchByUserDto;
+import com.eldenringcalculator.build.model.BuildSearchOfUserDto;
 import com.eldenringcalculator.build.model.BuildSearchDto;
 import com.eldenringcalculator.config.mapper.BeanMapper;
 
@@ -45,7 +46,8 @@ public class BuildController {
 	}
 	
 	@RequestMapping(path = "/{username}", method = RequestMethod.POST)
-	public Page<BuildDto> findPageOfUser(@PathVariable(name = "username") String username, @RequestBody BuildSearchByUserDto dto){
+	@PreAuthorize("authentication.principal==#username")
+	public Page<BuildDto> findPageOfUser(@PathVariable(name = "username") String username, @RequestBody BuildSearchOfUserDto dto){
 		
 		return this.beanMapper.mapPage(buildService.findPageOfUser(username, dto), BuildDto.class);
 	}

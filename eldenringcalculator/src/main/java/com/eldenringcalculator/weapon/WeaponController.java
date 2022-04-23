@@ -51,8 +51,8 @@ public class WeaponController {
 		return resource;
 	}
 	
-	@RequestMapping(path = "/upload")
-	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile file, @RequestParam("id") Long id){
+	@RequestMapping(path = "/upload", method = RequestMethod.PUT)
+	public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id){
 		
 		return this.weaponService.uploadImage(file, id);
 	}

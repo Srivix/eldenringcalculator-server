@@ -27,6 +27,7 @@ public class OAuth2ResourceServer extends ResourceServerConfigurerAdapter
         	.and().authorizeRequests().antMatchers(HttpMethod.POST, "/build/all").hasAuthority("ADMIN")
         	.and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/build/{id}").hasAuthority("USER")
         	.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/weapon/**").hasAuthority("ADMIN")
+        	.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/weapon/upload").hasAuthority("ADMIN")
         	.anyRequest().permitAll();
 	}
 	

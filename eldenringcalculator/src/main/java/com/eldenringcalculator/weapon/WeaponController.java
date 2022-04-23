@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.devonfw.module.beanmapping.common.api.BeanMapper;
 import com.eldenringcalculator.file.UploadFileService;
@@ -36,7 +38,7 @@ public class WeaponController {
 		return beanMapper.mapList(weaponService.findAll(), WeaponDto.class);
 	}
 	
-	@RequestMapping(path = "/uploads/img/{photoName:.+}", method = RequestMethod.GET)
+	@RequestMapping(path = "/uploads/{photoName:.+}", method = RequestMethod.GET)
 	public Resource chargePhoto(@PathVariable String photoName) {
 		
 		Resource resource = null;
@@ -47,6 +49,12 @@ public class WeaponController {
 		}
 
 		return resource;
+	}
+	
+	@RequestMapping(path = "/upload")
+	public ResponseEntity<?> upload(@RequestParam("archivo") MultipartFile file, @RequestParam("id") Long id){
+		
+		return this.weaponService.uploadImage(file, id);
 	}
 	
 	@RequestMapping(path = {"", "/{id}"}, method = RequestMethod.PUT)

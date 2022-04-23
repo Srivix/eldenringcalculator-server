@@ -1,5 +1,6 @@
 package com.eldenringcalculator.file;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -7,8 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.UUID;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -17,13 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class UploadFileServiceImpl implements UploadFileService{
 
-	private final Logger log = LoggerFactory.getLogger(UploadFileServiceImpl.class);
-	private final static String DIRECTORIO_UPLOAD = "uploads";
+	private final static String UPLOAD_DIRECTORY = "uploads";
 	
 	@Override
 	public Resource charge(String photoName) throws MalformedURLException {
+		
 		Path filePath = getPath(photoName);
-		log.info(filePath.toString());
 		
 		Resource resource = new UrlResource(filePath.toUri());
 		
@@ -31,8 +29,6 @@ public class UploadFileServiceImpl implements UploadFileService{
 			filePath = Paths.get("src/main/resources/static/").resolve("notweapon.jpg").toAbsolutePath();
 			
 			resource = new UrlResource(filePath.toUri());
-			
-			log.error("Error no se pudo cargar la imagen: "+photoName);
 		}
 		
 		return resource;
@@ -43,7 +39,6 @@ public class UploadFileServiceImpl implements UploadFileService{
 		String fileName = UUID.randomUUID().toString()+"_"+file.getOriginalFilename().replace(" ", "");
 		
 		Path filePath = getPath(fileName);
-		log.info(filePath.toString());
 		
 		Files.copy(file.getInputStream(), filePath);
 		
@@ -52,7 +47,26 @@ public class UploadFileServiceImpl implements UploadFileService{
 
 	@Override
 	public Path getPath(String photoName) {
-		return Paths.get(DIRECTORIO_UPLOAD).resolve(photoName).toAbsolutePath();
+		return Paths.get(UPLOAD_DIRECTORY).resolve(photoName).toAbsolutePath();
+	}
+
+	@Override
+	public boolean delete(String photoName) {
+		
+		if(photoName !=null && photoName.length() >0) {
+			
+			Path oldPhotoPath = Paths.get("uploads").resolve(photoName).toAbsolutePath();
+			
+			File oldFilePhoto = oldPhotoPath.toFile();
+			
+			if(oldFilePhoto.exists() && oldFilePhoto.canRead()) {
+				oldFilePhoto.delete();
+				return true;
+			}
+		}
+			
+		return false;
+		
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.eldenringcalculator.weapon;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +11,9 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.eldenringcalculator.file.UploadFileService;
 import com.eldenringcalculator.weapon.model.WeaponDto;
 import com.eldenringcalculator.weapon.model.WeaponEntity;
 import com.eldenringcalculator.weapontype.WeaponTypeService;
@@ -24,6 +27,9 @@ public class WeaponServiceImpl implements WeaponService{
 	
 	@Autowired
 	WeaponTypeService weaponTypeService;
+	
+	@Autowired
+	UploadFileService uploadFileService;
 	
 	@Override
 	public List<WeaponEntity> findAll() {
@@ -83,6 +89,47 @@ public class WeaponServiceImpl implements WeaponService{
 		response.put("mensaje", "Arma guardada.");
 		
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
+	}
+
+	@Override
+	public ResponseEntity<?> uploadImage(MultipartFile file, Long id) {
+
+		Map<String, Object> response = new HashMap<>();
+		
+		WeaponEntity weapon = this.weaponRepository.findById(id).orElse(null);
+		
+		if(weapon == null) {
+			response.put("mensaje", "No existe esa Arma.");
+			
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
+		
+		if(!file.isEmpty()) {
+			String fileName = null;
+			try {
+				fileName = uploadFileService.copy(file);
+			}catch(IOException e) {
+				response.put("mensaje", "Error al subir la imagen del arma.");
+				response.put("error", e.getMessage().concat(": ").concat(e.getCause().getMessage()));
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+			String oldFileName = weapon.getPhoto();
+			
+			uploadFileService.delete(oldFileName);
+			
+			weapon.setPhoto(fileName);
+			
+			this.weaponRepository.save(weapon);
+			
+			response.put("mensaje", "Se ha subido la imagen: "+fileName+" correctamente.");
+			
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
+		}else {
+			response.put("mensaje", "El archivo está vacío.");
+			
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);	
+		}	
 	}
 
 }

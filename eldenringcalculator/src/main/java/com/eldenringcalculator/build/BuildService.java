@@ -1,19 +1,22 @@
 package com.eldenringcalculator.build;
 
-import org.springframework.data.domain.Page;
+import java.util.HashMap;
+
+import org.springframework.http.ResponseEntity;
 
 import com.eldenringcalculator.build.model.BuildDto;
-import com.eldenringcalculator.build.model.BuildEntity;
 import com.eldenringcalculator.build.model.BuildSearchDto;
 
 public interface BuildService {
 	
-	void save(Long id, BuildDto dto, String author);
+	ResponseEntity<?> save(Long id, BuildDto dto, String username);
 	
-	Page<BuildEntity> findPage(BuildSearchDto dto);
+	HashMap<String, Object> findPage(BuildSearchDto dto);
 
-	Page<BuildEntity> findPageOfUser(String username, BuildSearchDto dto);
+	HashMap<String, Object> findPageOfUser(String username, BuildSearchDto dto);
 	
-	Page<BuildEntity> findPageOfAllBuilds(BuildSearchDto dto);
+	HashMap<String, Object> findPageOfAllBuilds(BuildSearchDto dto);
+	
+	ResponseEntity<?> delete(Long id, String username);
 
 }

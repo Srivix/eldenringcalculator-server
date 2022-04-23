@@ -1,7 +1,13 @@
 package com.eldenringcalculator.build;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,25 +30,57 @@ public class BuildController {
 	@Autowired
 	BeanMapper beanMapper;
 	
-	@RequestMapping(path = {"", "/{username}/{id}"}, method = RequestMethod.PUT)
-	public void save(@PathVariable(name = "id", required = false) Long id,@PathVariable(name = "username") String username, @RequestBody BuildDto dto) {
-		this.buildService.save(id, dto, username);
+	@RequestMapping(path = {"", "/{id}"}, method = RequestMethod.PUT)
+	public ResponseEntity<?> save(@PathVariable(name = "id", required = false) Long id, @RequestBody BuildDto dto, Principal principal) {
+		
+		return this.buildService.save(id, dto, principal.getName());
 	}
 	
 	@RequestMapping(path = "", method = RequestMethod.POST)
-	public Page<BuildDto> findPage(@RequestBody BuildSearchDto dto){
+	public ResponseEntity<?> findPage(@RequestBody BuildSearchDto dto){
 		
-		return this.beanMapper.mapPage(buildService.findPage(dto), BuildDto.class);
+		HashMap<String, Object> response = buildService.findPage(dto);
+		Page<BuildDto> page = null;
+		
+		if(response.get("page")!=null) {
+			page = this.beanMapper.mapPage((Page<?>) response.get("page"), BuildDto.class);
+			return new ResponseEntity<Page<BuildDto>>(page, HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
 	
-	@RequestMapping(path = "/{username}", method = RequestMethod.POST)
-	public Page<BuildDto> findPageOfUser(@PathVariable(name = "username") String username, @RequestBody BuildSearchDto dto){
+	@RequestMapping(path = "/user/{username}", method = RequestMethod.POST)
+	public ResponseEntity<?> findPageOfUser(@PathVariable(name = "username") String username, @RequestBody BuildSearchDto dto){
 		
-		return this.beanMapper.mapPage(buildService.findPageOfUser(username, dto), BuildDto.class);
+		HashMap<String, Object> response = buildService.findPageOfUser(username, dto);
+		Page<BuildDto> page = null;
+		
+		if(response.get("page")!=null) {
+			page = this.beanMapper.mapPage((Page<?>) response.get("page"), BuildDto.class);
+			return new ResponseEntity<Page<BuildDto>>(page, HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
 	
 	@RequestMapping(path ="/all", method = RequestMethod.POST)
-	public Page<BuildDto> findPageOfAllBuilds(@RequestBody BuildSearchDto dto){
-		return this.beanMapper.mapPage(buildService.findPageOfAllBuilds(dto), BuildDto.class);
+	public ResponseEntity<?> findPageOfAllBuilds(@RequestBody BuildSearchDto dto){
+
+		HashMap<String, Object> response = buildService.findPageOfAllBuilds(dto);
+		Page<BuildDto> page = null;
+		
+		if(response.get("page")!=null) {
+			page = this.beanMapper.mapPage((Page<?>) response.get("page"), BuildDto.class);
+			return new ResponseEntity<Page<BuildDto>>(page, HttpStatus.OK);
+		}
+		else
+			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
+	
+	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> delete(@PathVariable("id") Long id, Principal principal) {
+		
+		return this.buildService.delete(id, principal.getName());
 	}
 }

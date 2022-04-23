@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.eldenringcalculator.role.model.RoleEntity;
 
@@ -30,21 +31,23 @@ public class UserEntity {
 	
 	@NotEmpty
 	@Email(message = "Email should be valid")
-	@Column(unique = true, name = "email")
+	@Column(unique = true, name = "email", nullable = false)
 	private String email;
 	
 	@NotEmpty
-	@Column(unique = true, name = "username")
+	@Size(min= 4)
+	@Column(unique = true, name = "username", nullable = false)
 	private String username;
 	
 	@NotEmpty
-	@Column(name = "password")
+	@Size(min=8)
+	@Column(name = "password", nullable = false)
 	private String password;
 	
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name="user_id"),
-	inverseJoinColumns=@JoinColumn(name="role_id"),
-	uniqueConstraints = {@UniqueConstraint(columnNames= {"user_id","role_id"})})
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name="user"),
+	inverseJoinColumns=@JoinColumn(name="role"),
+	uniqueConstraints = {@UniqueConstraint(columnNames= {"user","role"})})
 	private List<RoleEntity> roles;
 
 	/**

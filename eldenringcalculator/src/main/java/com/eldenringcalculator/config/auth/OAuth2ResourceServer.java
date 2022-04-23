@@ -12,10 +12,12 @@ public class OAuth2ResourceServer extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http
-        	.authorizeRequests().antMatchers(HttpMethod.POST,"/build/{username}").access("hasAuthority('USER') && principal==#username")
-        	.and().authorizeRequests().antMatchers(HttpMethod.PUT,"/build/").hasAuthority("USER")
-        	.and().authorizeRequests().antMatchers(HttpMethod.PUT,"/build/{username}/{id}").access("hasAuthority('USER') && principal==#username")
+        	.authorizeRequests().antMatchers(HttpMethod.POST,"/build/user/{username}").access("hasAuthority('USER') && principal==#username")
+        	.and().authorizeRequests().antMatchers(HttpMethod.PUT,"/build").hasAuthority("USER")
+        	.and().authorizeRequests().antMatchers(HttpMethod.PUT,"/build/{id}").hasAuthority("USER")
         	.and().authorizeRequests().antMatchers(HttpMethod.POST, "/build/all").hasAuthority("ADMIN")
+        	.and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/build/{id}").hasAuthority("USER")
+        	.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/weapon/**").hasAuthority("ADMIN")
         	.anyRequest().permitAll();
 	}
 }

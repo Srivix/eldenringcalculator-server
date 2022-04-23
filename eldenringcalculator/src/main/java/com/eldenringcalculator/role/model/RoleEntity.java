@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class RoleEntity {
 	
 	@Id
@@ -16,7 +16,7 @@ public class RoleEntity {
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
 
 	/**

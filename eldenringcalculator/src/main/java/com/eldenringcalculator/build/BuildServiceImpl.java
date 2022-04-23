@@ -18,9 +18,13 @@ import com.eldenringcalculator.build.model.BuildDto;
 import com.eldenringcalculator.build.model.BuildEntity;
 import com.eldenringcalculator.build.model.BuildSearchDto;
 import com.eldenringcalculator.buildclass.BuildClassService;
+import com.eldenringcalculator.buildclass.model.BuildClassEntity;
 import com.eldenringcalculator.buildstate.BuildStateService;
+import com.eldenringcalculator.buildstate.model.BuildStateEntity;
 import com.eldenringcalculator.user.UserService;
+import com.eldenringcalculator.user.model.UserEntity;
 import com.eldenringcalculator.weapon.WeaponService;
+import com.eldenringcalculator.weapon.model.WeaponEntity;
 
 @Service
 public class BuildServiceImpl implements BuildService{
@@ -162,9 +166,20 @@ public class BuildServiceImpl implements BuildService{
 		BuildEntity build = null;
 		Map<String, Object> response = new HashMap<>();
 		
-		if(id == null)
+		if(id == null) {
 			build = new BuildEntity();
-		else {
+			
+			UserEntity user = userService.findByUsername(username);
+			
+			if(user==null) {
+				response.put("mensaje", "No existe ese usuario.");
+				response.put("error", "CreatedBy not exists.");
+				
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}else
+				build.setCreatedby(user);
+			
+		}else {
 
 			build = this.buildRepository.findById(id).orElse(null);
 			if(build==null) {
@@ -183,56 +198,67 @@ public class BuildServiceImpl implements BuildService{
 
 		BeanUtils.copyProperties(dto, build, "id", "buildclass", "weapon1", "weapon2", "createdby", "state");
 		
-		build.setCreatedby(userService.findByUsername(username));
-		
-		if(build.getCreatedby()==null) {
-			response.put("mensaje", "No existe ese usuario.");
-			response.put("error", "CreatedBy not exists.");
+		if(dto.getState() == null) {
+			response.put("mensaje", "No se ha introducido Estado.");
+			response.put("error", "State not exists.");
 			
-			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		build.setState(buildStateService.findByName(dto.getState().getName()));
+		BuildStateEntity buildState = buildStateService.findByName(dto.getState().getName());
 		
-		if(build.getState()==null) {
+		if(buildState==null) {
 			response.put("mensaje", "No existe ese tipo de estado.");
 			response.put("error", "State not exists.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}else
+			build.setState(buildState);
+		
+		if(dto.getBuildclass() == null) {
+			response.put("mensaje", "No se ha introducido BuildClass.");
+			response.put("error", "BuildClass not exists.");
+			
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		
-		build.setBuildclass(buildClassService.findById(dto.getBuildclass().getId()));
+		BuildClassEntity buildClass = buildClassService.findById(dto.getBuildclass().getId());
 		
-		if(build.getBuildclass()==null) {
+		if(buildClass==null) {
 			response.put("mensaje", "No existe ese tipo de clase.");
 			response.put("error", "BuildClass not exists.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+		}else
+			build.setBuildclass(buildClass);
+		
+		if(dto.getWeapon1()==null)
+			build.setWeapon1(null);
+		else {
+			WeaponEntity weapon1 = weaponService.get(dto.getWeapon1().getId());
+			
+			if(weapon1 == null) {
+				response.put("mensaje", "No existe el arma 1.");
+				response.put("error", "Weapon1 not exists.");
+				
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}else
+				build.setWeapon1(weapon1);
 		}
 		
-		if(dto.getWeapon1()!=null){
-			build.setWeapon1(weaponService.get(dto.getWeapon1().getId()));
-			if(build.getWeapon1()==null) {
-				response.put("mensaje", "No existe el arma 1.");
-				response.put("error", "Weapon1 not exists.");
-				
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-			}
-		}
-		else
-			build.setWeapon1(null);
-
-		if(dto.getWeapon2()!=null){
-			build.setWeapon2(weaponService.get(dto.getWeapon2().getId()));
-			if(build.getWeapon2()==null) {
-				response.put("mensaje", "No existe el arma 1.");
-				response.put("error", "Weapon1 not exists.");
-				
-				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-			}
-		}
-		else
+		if(dto.getWeapon2()==null)
 			build.setWeapon2(null);
+		else {
+			WeaponEntity weapon2 = weaponService.get(dto.getWeapon2().getId());
+			
+			if(weapon2 == null) {
+				response.put("mensaje", "No existe el arma 2.");
+				response.put("error", "Weapon1 not exists.");
+				
+				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
+			}else
+				build.setWeapon1(weapon2);
+		}
 		
 		if(!validateStats(build)) {
 			response.put("mensaje", "Las estadisticas no son correctas.");
@@ -261,13 +287,13 @@ public class BuildServiceImpl implements BuildService{
 	public Boolean validateRequirements(BuildEntity build) {
 		
 		if(build.getWeapon1()!=null)
-			if(build.getDexterity()<build.getWeapon1().getDexreq() || build.getStrength()<build.getWeapon1().getStrengreq() || build.getIntelect()<build.getWeapon1().getIntreq() 
-					|| build.getArcane()<build.getWeapon1().getArcanereq() || build.getFaith()<build.getWeapon1().getFaithreq()) 
+			if(build.getDexterity()<build.getWeapon1().getDexReq() || build.getStrength()<build.getWeapon1().getStrengReq() || build.getIntelect()<build.getWeapon1().getIntReq() 
+					|| build.getArcane()<build.getWeapon1().getArcaneReq() || build.getFaith()<build.getWeapon1().getFaithReq()) 
 				return false;
 
 		if(build.getWeapon2()!=null)
-			if(build.getDexterity()<build.getWeapon2().getDexreq() || build.getStrength()<build.getWeapon2().getStrengreq() || build.getIntelect()<build.getWeapon2().getIntreq() 
-					|| build.getArcane()<build.getWeapon2().getArcanereq() || build.getFaith()<build.getWeapon2().getFaithreq())
+			if(build.getDexterity()<build.getWeapon2().getDexReq() || build.getStrength()<build.getWeapon2().getStrengReq() || build.getIntelect()<build.getWeapon2().getIntReq() 
+					|| build.getArcane()<build.getWeapon2().getArcaneReq() || build.getFaith()<build.getWeapon2().getFaithReq())
 				return false;
 			
 		
@@ -297,7 +323,7 @@ public class BuildServiceImpl implements BuildService{
 		try {
 			if(this.buildRepository.findById(id).orElse(null).getCreatedby().getUsername().equals(username)){
 				this.buildRepository.deleteById(id);
-				response.put("mensaje", "Arma borrada.");
+				response.put("mensaje", "Build borrada.");
 				
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
 			}else{

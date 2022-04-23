@@ -3,16 +3,16 @@ package com.eldenringcalculator.buildclass.model;
 public class BuildClassDto {
 	
 	private Long id;
-	private String name;
-	private int level;
-	private int vigor;
+	private String name = "-";
+	private int level = 0;
+	private int vigor= 0;
 	private int mind;
-	private int endurance;
-	private int dexterity;
-	private int strength;
-	private int intelect;
-	private int faith;
-	private int arcane;
+	private int endurance= 0;
+	private int dexterity= 0;
+	private int strength= 0;
+	private int intelect= 0;
+	private int faith= 0;
+	private int arcane= 0;
 	/**
 	 * @return the id
 	 */

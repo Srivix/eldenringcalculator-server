@@ -21,7 +21,7 @@ import com.eldenringcalculator.config.mapper.BeanMapper;
 
 @RequestMapping(value = "/build")
 @RestController
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BuildController {
 
 	@Autowired

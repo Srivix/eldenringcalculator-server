@@ -4,7 +4,7 @@ public class WeaponTypeDto {
 	
 	private Long id;
 	
-	private String name;
+	private String name = "-";
 
 	/**
 	 * @return the id

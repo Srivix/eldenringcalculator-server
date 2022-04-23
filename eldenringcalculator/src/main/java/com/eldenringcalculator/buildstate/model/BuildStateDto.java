@@ -3,7 +3,7 @@ package com.eldenringcalculator.buildstate.model;
 public class BuildStateDto {
 
 	private Long id;
-	private String name;
+	private String name = "-";
 	
 	/**
 	 * @return the id

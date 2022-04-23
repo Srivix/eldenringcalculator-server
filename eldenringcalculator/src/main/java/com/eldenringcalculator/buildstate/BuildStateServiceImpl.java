@@ -13,7 +13,7 @@ public class BuildStateServiceImpl implements BuildStateService{
 	
 	@Override
 	public BuildStateEntity findByName(String state) {
-		return this.buildStateRepository.findByName(state).orElse(null);
+		return this.buildStateRepository.findByName(state);
 	}
 
 }

@@ -2,6 +2,7 @@ package com.eldenringcalculator.role.model;
 
 public class RoleDto {
 
+	private Long id;
 	private String name;
 	
 	/**
@@ -16,5 +17,16 @@ public class RoleDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

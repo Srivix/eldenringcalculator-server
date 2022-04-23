@@ -12,16 +12,16 @@ public class BuildDto {
 	private Long id;
 	private String name;
 	private BuildClassDto buildclass;
-	private int level;
-	private int dexterity;	
-	private int strength;
-	private int intelect;
-	private int faith;
-	private int arcane;
+	private int level = 0;
+	private int dexterity = 0;	
+	private int strength = 0;
+	private int intelect = 0;
+	private int faith = 0;
+	private int arcane = 0;
 	private WeaponDto weapon1;
 	private WeaponDto weapon2;
 	private UserDto createdby;
-	private Date created;
+	private Date created = new Date();
 	private BuildStateDto state;
 	
 	/**

@@ -17,7 +17,7 @@ import com.eldenringcalculator.user.model.UserEntity;
 import com.eldenringcalculator.weapon.model.WeaponEntity;
 
 @Entity
-@Table(name = "build")
+@Table(name = "builds")
 public class BuildEntity {
 	
 	@Id
@@ -29,25 +29,25 @@ public class BuildEntity {
 	private String name;
 	
 	@ManyToOne
-	@JoinColumn(name = "buildclass")
+	@JoinColumn(name = "buildclass", nullable = false)
 	private BuildClassEntity buildclass;
 	
-	@Column(name = "level")
+	@Column(name = "level", nullable = false)
 	private int level;
 	
-	@Column(name = "dexterity")
+	@Column(name = "dexterity", nullable = false)
 	private int dexterity;
 	
-	@Column(name = "strength")
+	@Column(name = "strength", nullable = false)
 	private int strength;
 	
-	@Column(name = "intelect")
+	@Column(name = "intelect", nullable = false)
 	private int intelect;
 	
-	@Column(name = "faith")
+	@Column(name = "faith", nullable = false)
 	private int faith;
 	
-	@Column(name = "arcane")
+	@Column(name = "arcane", nullable = false)
 	private int arcane;
 	
 	@ManyToOne
@@ -62,11 +62,11 @@ public class BuildEntity {
 	@JoinColumn(name = "createdby")
 	private UserEntity createdby;
 
-	@Column(name = "created")
+	@Column(name = "created", nullable = false)
 	private Date created;
 	
 	@ManyToOne
-	@JoinColumn(name = "state")
+	@JoinColumn(name = "state" , nullable = false)
 	private BuildStateEntity state;
 	
 	/**

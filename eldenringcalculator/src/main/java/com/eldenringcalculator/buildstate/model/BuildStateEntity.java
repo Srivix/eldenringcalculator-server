@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "build_state")
+@Table(name = "buildstates")
 public class BuildStateEntity {
 
 	@Id
@@ -16,7 +16,7 @@ public class BuildStateEntity {
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
 	
 	/**

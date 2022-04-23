@@ -49,8 +49,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 			throw new UsernameNotFoundException("Excepcion Error login no se encuentra usuario"+username);
 		}
 		
-		List<GrantedAuthority> authorities = user.getRoles()
-				.stream()
+		List<GrantedAuthority> authorities = user.getRoles().stream()
 				.map(role -> new SimpleGrantedAuthority(role.getName()))
 				.collect(Collectors.toList());
 		
@@ -88,7 +87,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		}catch(Exception e) {
 			response.put("mensaje", "No se ha podido registrar el usuario.");
-			response.put("error", e.getLocalizedMessage());
+			response.put("error", e.getMessage());
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.eldenringcalculator.weapon.model.WeaponDto;
 import com.eldenringcalculator.weapon.model.WeaponEntity;
 import com.eldenringcalculator.weapontype.WeaponTypeService;
+import com.eldenringcalculator.weapontype.model.WeaponTypeEntity;
 
 @Service
 public class WeaponServiceImpl implements WeaponService{
@@ -26,13 +27,11 @@ public class WeaponServiceImpl implements WeaponService{
 	
 	@Override
 	public List<WeaponEntity> findAll() {
-
 		return this.weaponRepository.findAll();
 	}
 
 	@Override
 	public WeaponEntity get(Long id) {
-
 		return this.weaponRepository.findById(id).orElse(null);
 	}
 
@@ -55,14 +54,22 @@ public class WeaponServiceImpl implements WeaponService{
 		
 		BeanUtils.copyProperties(dto, weapon, "id", "weapontype");
 		
-		weapon.setWeaponType(weaponTypeService.get(dto.getWeaponType().getId()));
+		if(dto.getWeaponType() == null) {
+			response.put("mensaje", "No se ha introducido WeaponType.");
+			response.put("error", "WeaponType not exists.");
+			
+			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
+		}
 		
-		if(weapon.getWeaponType()==null) {
+		WeaponTypeEntity weaponType = this.weaponTypeService.get(dto.getWeaponType().getId());
+		
+		if(weaponType==null) {
 			response.put("mensaje", "No existe ese tipo de arma.");
 			response.put("error", "WeaponType not exists.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
-		}
+		}else
+			weapon.setWeaponType(weaponType);
 		
 		
 		try {

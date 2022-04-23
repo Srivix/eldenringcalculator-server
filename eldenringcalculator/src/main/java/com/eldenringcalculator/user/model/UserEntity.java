@@ -21,7 +21,7 @@ import javax.validation.constraints.Size;
 import com.eldenringcalculator.role.model.RoleEntity;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 public class UserEntity {
 	
 	@Id
@@ -35,7 +35,7 @@ public class UserEntity {
 	private String email;
 	
 	@NotEmpty
-	@Size(min= 4)
+	@Size(min=4)
 	@Column(unique = true, name = "username", nullable = false)
 	private String username;
 	
@@ -45,7 +45,7 @@ public class UserEntity {
 	private String password;
 	
 	@ManyToMany(fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name="user"),
+	@JoinTable(name = "users_roles", joinColumns = @JoinColumn(name="user"),
 	inverseJoinColumns=@JoinColumn(name="role"),
 	uniqueConstraints = {@UniqueConstraint(columnNames= {"user","role"})})
 	private List<RoleEntity> roles;

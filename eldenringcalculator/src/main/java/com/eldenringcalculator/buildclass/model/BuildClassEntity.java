@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Build_Class")
+@Table(name = "buildclasses")
 public class BuildClassEntity {
 	
 	@Id
@@ -16,34 +16,34 @@ public class BuildClassEntity {
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "name")
+	@Column(name = "name", nullable = false)
 	private String name;
 
-	@Column(name = "level")
+	@Column(name = "level", nullable = false)
 	private int level;
 
-	@Column(name = "vigor")
+	@Column(name = "vigor", nullable = false)
 	private int vigor;
 
-	@Column(name = "mind")
+	@Column(name = "mind", nullable = false)
 	private int mind;
 
-	@Column(name = "endurance")
+	@Column(name = "endurance", nullable = false)
 	private int endurance;
 
-	@Column(name = "dexterity")
+	@Column(name = "dexterity", nullable = false)
 	private int dexterity;
 
-	@Column(name = "strength")
+	@Column(name = "strength", nullable = false)
 	private int strength;
 
-	@Column(name = "intelect")
+	@Column(name = "intelect", nullable = false)
 	private int intelect;
 
-	@Column(name = "faith")
+	@Column(name = "faith", nullable = false)
 	private int faith;
 
-	@Column(name = "arcane")
+	@Column(name = "arcane", nullable = false)
 	private int arcane;
 	
 	/**

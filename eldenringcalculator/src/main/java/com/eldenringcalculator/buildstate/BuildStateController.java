@@ -1,4 +1,4 @@
-package com.eldenringcalculator.buildclass;
+package com.eldenringcalculator.buildstate;
 
 import java.util.List;
 
@@ -8,22 +8,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.eldenringcalculator.buildclass.model.BuildClassDto;
+import com.eldenringcalculator.buildstate.model.BuildStateDto;
 import com.eldenringcalculator.config.mapper.BeanMapper;
 
-@RequestMapping(value = "/buildclass")
+@RequestMapping(value = "/buildstate")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200/")
-public class BuildClassController {
-
+@CrossOrigin(origins = "http://localhost:4200")
+public class BuildStateController {
+	
 	@Autowired
-	BuildClassService buildClassService;
+	BuildStateService buildStateService;
 	
 	@Autowired
 	BeanMapper beanMapper;
 	
 	@RequestMapping(path="", method = RequestMethod.GET)
-	public List<BuildClassDto> get(){
-		return this.beanMapper.mapList(buildClassService.findAll(), BuildClassDto.class);
+	public List<BuildStateDto> get(){
+		return this.beanMapper.mapList(buildStateService.findAll(), BuildStateDto.class);
 	}
+
 }

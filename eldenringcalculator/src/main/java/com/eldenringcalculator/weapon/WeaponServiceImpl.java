@@ -53,10 +53,13 @@ public class WeaponServiceImpl implements WeaponService{
 			weapon = this.weaponRepository.findById(id).orElse(null);
 			if(weapon==null) {
 				response.put("mensaje", "No existe el arma.");
-				
+				response.put("error","No existe el arma.");
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
 		}
+		
+		if(dto.getPhoto()=="")
+			dto.setPhoto("noPhoto.png");
 		
 		BeanUtils.copyProperties(dto, weapon, "id", "weapontype");
 		
@@ -100,6 +103,7 @@ public class WeaponServiceImpl implements WeaponService{
 		
 		if(weapon == null) {
 			response.put("mensaje", "No existe esa Arma.");
+			response.put("error","No existe el Arma.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
@@ -127,6 +131,7 @@ public class WeaponServiceImpl implements WeaponService{
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.CREATED);
 		}else {
 			response.put("mensaje", "El archivo está vacío.");
+			response.put("error","Archivo vacío.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);	
 		}	

@@ -12,7 +12,7 @@ import com.eldenringcalculator.user.model.UserSaveDto;
 
 @RequestMapping(value = "/user")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class UserController {
 	
 	@Autowired

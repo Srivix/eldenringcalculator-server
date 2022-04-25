@@ -21,7 +21,7 @@ public class OAuth2ResourceServer extends ResourceServerConfigurerAdapter
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http
-        	.authorizeRequests().antMatchers(HttpMethod.POST,"/build/user/{username}").access("hasAuthority('USER') && principal==#username")
+        	.authorizeRequests().antMatchers(HttpMethod.POST,"/build/user").hasAuthority("USER")
         	.and().authorizeRequests().antMatchers(HttpMethod.PUT,"/build").hasAuthority("USER")
         	.and().authorizeRequests().antMatchers(HttpMethod.PUT,"/build/{id}").hasAuthority("USER")
         	.and().authorizeRequests().antMatchers(HttpMethod.POST, "/build/all").hasAuthority("ADMIN")
@@ -30,11 +30,11 @@ public class OAuth2ResourceServer extends ResourceServerConfigurerAdapter
         	.and().authorizeRequests().antMatchers(HttpMethod.PUT, "/weapon/upload").hasAuthority("ADMIN")
         	.anyRequest().permitAll();
 	}
-	
+
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
+		config.setAllowedOrigins(Arrays.asList("http://localhost:4200/"));
 		config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		config.setAllowCredentials(true);
 		config.setAllowedHeaders(Arrays.asList("Content-Type", "Authorization"));

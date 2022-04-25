@@ -13,7 +13,7 @@ import com.eldenringcalculator.weapontype.model.WeaponTypeDto;
 
 @RequestMapping(value = "/weaponType")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class WeaponTypeController {
 	
 	@Autowired

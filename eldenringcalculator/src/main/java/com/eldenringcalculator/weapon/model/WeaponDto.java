@@ -6,7 +6,7 @@ public class WeaponDto {
 	
 	private Long id;
 	private String name = "-";
-	private String photo;
+	private String photo = "nophoto.png";
 	private WeaponTypeDto weaponType;
 	private int dexReq = 0;
 	private int strengReq = 0;

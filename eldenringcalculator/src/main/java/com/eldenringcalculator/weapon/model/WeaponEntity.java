@@ -23,7 +23,7 @@ public class WeaponEntity {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Column(name = "photo")
+	@Column(name = "photo", nullable = false)
 	private String photo;
 	
 	@ManyToOne

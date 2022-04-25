@@ -69,6 +69,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 		
 		if(dto.getPassword().length()<8) {
 			response.put("mensaje", "Password muy corto.");
+			response.put("error","Password muy corto.");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);	
 		}
 		
@@ -86,7 +87,7 @@ public class UserServiceImpl implements UserService, UserDetailsService{
 			response.put("mensaje", "Usuario registrado con éxito.");
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.OK);
 		}catch(Exception e) {
-			response.put("mensaje", "No se ha podido registrar el usuario.");
+			response.put("mensaje", "Usuario o Email no disponibles.");
 			response.put("error", e.getMessage());
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}

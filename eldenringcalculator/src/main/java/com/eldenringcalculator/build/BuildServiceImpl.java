@@ -65,6 +65,7 @@ public class BuildServiceImpl implements BuildService{
 		}catch(DataAccessException e) {
 			response.put("page", null);
 			response.put("mensaje", "La propiedad de ordenación no es correcta.");
+			response.put("error", "La propiedad de ordenación es incorrecta.");
 			
 		}
 		
@@ -87,11 +88,13 @@ public class BuildServiceImpl implements BuildService{
 			}else{
 				response.put("page", null);
 				response.put("mensaje", "El json de paginación está vacío.");
+				response.put("error", "El json de paginación está vacío.");
 			}
 		
 		}catch(DataAccessException e) {
 			response.put("page", null);
 			response.put("mensaje", "La propiedad de ordenación no es correcta.");
+			response.put("error", "La propiedad de ordenación no es correcta.");
 			
 		}
 		
@@ -114,12 +117,13 @@ public class BuildServiceImpl implements BuildService{
 			}else{
 				response.put("page", null);
 				response.put("mensaje", "El json de paginación está vacío.");
+				response.put("error", "El json de paginación está vacío.");
 			}
 		
 		}catch(DataAccessException e) {
 			response.put("page", null);
 			response.put("mensaje", "La propiedad de ordenación no es correcta.");
-			
+			response.put("error", "La propiedad de ordenación no es correcta");			
 		}
 		
 		return response;
@@ -184,12 +188,14 @@ public class BuildServiceImpl implements BuildService{
 			build = this.buildRepository.findById(id).orElse(null);
 			if(build==null) {
 				response.put("mensaje", "No existe la build.");
+				response.put("error", "Build not exists.");
 				
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}
 				
 			if(!build.getCreatedby().getUsername().equals(username)) {
 				response.put("mensaje", "El usuario no es el dueño de esta Build.");
+				response.put("error", "El usuario no es el dueño de esta Build.");
 				
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.UNAUTHORIZED);
 			}
@@ -253,21 +259,23 @@ public class BuildServiceImpl implements BuildService{
 			
 			if(weapon2 == null) {
 				response.put("mensaje", "No existe el arma 2.");
-				response.put("error", "Weapon1 not exists.");
+				response.put("error", "Weapon2 not exists.");
 				
 				return new ResponseEntity<Map<String, Object>>(response, HttpStatus.NOT_FOUND);
 			}else
-				build.setWeapon1(weapon2);
+				build.setWeapon2(weapon2);
 		}
 		
 		if(!validateStats(build)) {
 			response.put("mensaje", "Las estadisticas no son correctas.");
+			response.put("error", "Las estadisticas no son correctas.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
 		
 		if(!validateRequirements(build)){
 			response.put("mensaje", "La build no cumple con los requisitos de un arma.");
+			response.put("error", "La build no cumple con los requisitos de un arma.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);
 		}
@@ -279,6 +287,7 @@ public class BuildServiceImpl implements BuildService{
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
 		}catch(DataAccessException e) {
 			response.put("mensaje", "No se ha podido guardar la build en la base de datos.");
+			response.put("error", "No se ha podido guardar la build en la base de datos.");
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
@@ -328,11 +337,12 @@ public class BuildServiceImpl implements BuildService{
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
 			}else{
 				response.put("mensaje", "No eres el dueño de la build.");
+				response.put("error","No eres el dueño de la build.");
 				return new ResponseEntity<Map<String,Object>>(response, HttpStatus.UNAUTHORIZED);
 			}
 		}catch(NullPointerException e) {
 			response.put("mensaje", "No existe la build.");
-			response.put("error",e.toString());
+			response.put("error","Build: "+e.toString());
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		

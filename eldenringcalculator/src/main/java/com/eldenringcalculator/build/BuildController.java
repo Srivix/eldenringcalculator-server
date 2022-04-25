@@ -21,7 +21,7 @@ import com.eldenringcalculator.config.mapper.BeanMapper;
 
 @RequestMapping(value = "/build")
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class BuildController {
 
 	@Autowired
@@ -50,10 +50,10 @@ public class BuildController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);	
 	}
 	
-	@RequestMapping(path = "/user/{username}", method = RequestMethod.POST)
-	public ResponseEntity<?> findPageOfUser(@PathVariable(name = "username") String username, @RequestBody BuildSearchDto dto){
+	@RequestMapping(path = "/user", method = RequestMethod.POST)
+	public ResponseEntity<?> findPageOfUser(Principal principal, @RequestBody BuildSearchDto dto){
 		
-		HashMap<String, Object> response = buildService.findPageOfUser(username, dto);
+		HashMap<String, Object> response = buildService.findPageOfUser(principal.getName(), dto);
 		Page<BuildDto> page = null;
 		
 		if(response.get("page")!=null) {

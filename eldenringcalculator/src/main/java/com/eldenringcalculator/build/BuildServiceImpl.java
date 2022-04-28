@@ -318,7 +318,7 @@ public class BuildServiceImpl implements BuildService{
 
 		Integer buildLevel = build.getLevel()-build.getBuildclass().getLevel();
 
-		if(buildStatsCount == buildLevel)		
+		if(buildStatsCount.equals(buildLevel))		
 			return true;
 		
 		return false;

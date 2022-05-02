@@ -22,15 +22,6 @@ public class BuildClassEntity {
 	@Column(name = "level", nullable = false)
 	private int level;
 
-	@Column(name = "vigor", nullable = false)
-	private int vigor;
-
-	@Column(name = "mind", nullable = false)
-	private int mind;
-
-	@Column(name = "endurance", nullable = false)
-	private int endurance;
-
 	@Column(name = "dexterity", nullable = false)
 	private int dexterity;
 
@@ -81,42 +72,6 @@ public class BuildClassEntity {
 	 */
 	public void setLevel(int level) {
 		this.level = level;
-	}
-	/**
-	 * @return the vigor
-	 */
-	public int getVigor() {
-		return vigor;
-	}
-	/**
-	 * @param vigor the vigor to set
-	 */
-	public void setVigor(int vigor) {
-		this.vigor = vigor;
-	}
-	/**
-	 * @return the mind
-	 */
-	public int getMind() {
-		return mind;
-	}
-	/**
-	 * @param mind the mind to set
-	 */
-	public void setMind(int mind) {
-		this.mind = mind;
-	}
-	/**
-	 * @return the endurance
-	 */
-	public int getEndurance() {
-		return endurance;
-	}
-	/**
-	 * @param endurance the endurance to set
-	 */
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
 	}
 	/**
 	 * @return the dexterity

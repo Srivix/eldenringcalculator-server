@@ -5,9 +5,6 @@ public class BuildClassDto {
 	private Long id;
 	private String name = "-";
 	private int level = 0;
-	private int vigor= 0;
-	private int mind;
-	private int endurance= 0;
 	private int dexterity= 0;
 	private int strength= 0;
 	private int intelect= 0;
@@ -48,42 +45,6 @@ public class BuildClassDto {
 	 */
 	public void setLevel(int level) {
 		this.level = level;
-	}
-	/**
-	 * @return the vigor
-	 */
-	public int getVigor() {
-		return vigor;
-	}
-	/**
-	 * @param vigor the vigor to set
-	 */
-	public void setVigor(int vigor) {
-		this.vigor = vigor;
-	}
-	/**
-	 * @return the mind
-	 */
-	public int getMind() {
-		return mind;
-	}
-	/**
-	 * @param mind the mind to set
-	 */
-	public void setMind(int mind) {
-		this.mind = mind;
-	}
-	/**
-	 * @return the endurance
-	 */
-	public int getEndurance() {
-		return endurance;
-	}
-	/**
-	 * @param endurance the endurance to set
-	 */
-	public void setEndurance(int endurance) {
-		this.endurance = endurance;
 	}
 	/**
 	 * @return the dexterity

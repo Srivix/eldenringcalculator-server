@@ -1,6 +1,5 @@
 package com.eldenringcalculator.weapon;
 
-import java.net.MalformedURLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.devonfw.module.beanmapping.common.api.BeanMapper;
-import com.eldenringcalculator.file.UploadFileService;
 import com.eldenringcalculator.weapon.model.WeaponDto;
 
 @RequestMapping(value = "/weapon")
@@ -28,9 +26,6 @@ public class WeaponController {
 	WeaponService weaponService;
 	
 	@Autowired
-	UploadFileService uploadFileService;
-	
-	@Autowired
 	BeanMapper beanMapper;
 	
 	@RequestMapping(path = "", method = RequestMethod.GET)
@@ -40,26 +35,16 @@ public class WeaponController {
 	
 	@RequestMapping(path = "/uploads/{photoName:.+}", method = RequestMethod.GET)
 	public Resource chargePhoto(@PathVariable String photoName) {
-		
-		Resource resource = null;
-		try {
-			resource = uploadFileService.charge(photoName);
-		} catch(MalformedURLException e) {
-			e.printStackTrace();
-		}
-
-		return resource;
+		return this.weaponService.charge(photoName);
 	}
 	
 	@RequestMapping(path = "/upload", method = RequestMethod.PUT)
-	public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("id") Long id){
-		
-		return this.weaponService.uploadImage(file, id);
+	public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file, @RequestParam("name") String name){	
+		return this.weaponService.uploadImage(file, name);
 	}
 	
 	@RequestMapping(path = {"", "/{id}"}, method = RequestMethod.PUT)
-	public ResponseEntity<?> save(@PathVariable(name = "id", required = false) Long id, @RequestBody WeaponDto dto) {
-			
+	public ResponseEntity<?> save(@PathVariable(name = "id", required = false) Long id, @RequestBody WeaponDto dto) {	
 		return this.weaponService.save(dto, id);
 	}
 

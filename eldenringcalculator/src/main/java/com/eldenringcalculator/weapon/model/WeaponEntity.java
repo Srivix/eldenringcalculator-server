@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.eldenringcalculator.weapontype.model.WeaponTypeEntity;
 
@@ -20,7 +22,9 @@ public class WeaponEntity {
 	@Column(name = "id", nullable = false)
 	private Long id;
 	
-	@Column(name = "name", nullable = false)
+	@NotEmpty
+	@Size(min = 4)
+	@Column(unique = true,name = "name", nullable = false)
 	private String name;
 	
 	@Column(name = "photo", nullable = false)

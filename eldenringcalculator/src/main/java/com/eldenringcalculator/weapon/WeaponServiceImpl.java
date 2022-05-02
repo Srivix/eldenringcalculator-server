@@ -1,12 +1,14 @@
 package com.eldenringcalculator.weapon;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -95,11 +97,11 @@ public class WeaponServiceImpl implements WeaponService{
 	}
 
 	@Override
-	public ResponseEntity<?> uploadImage(MultipartFile file, Long id) {
+	public ResponseEntity<?> uploadImage(MultipartFile file, String name) {
 
 		Map<String, Object> response = new HashMap<>();
 		
-		WeaponEntity weapon = this.weaponRepository.findById(id).orElse(null);
+		WeaponEntity weapon = this.weaponRepository.findByName(name);
 		
 		if(weapon == null) {
 			response.put("mensaje", "No existe esa Arma.");
@@ -135,6 +137,17 @@ public class WeaponServiceImpl implements WeaponService{
 			
 			return new ResponseEntity<Map<String, Object>>(response, HttpStatus.BAD_REQUEST);	
 		}	
+	}
+
+	@Override
+	public Resource charge(String name) {
+		
+		try {
+			return this.uploadFileService.charge(name);
+		} catch(MalformedURLException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

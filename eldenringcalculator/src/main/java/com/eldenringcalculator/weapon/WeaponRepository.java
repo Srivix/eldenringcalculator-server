@@ -12,4 +12,6 @@ public interface WeaponRepository extends CrudRepository<WeaponEntity, Long>{
 	@EntityGraph(attributePaths= {"weaponType"})
 	List<WeaponEntity> findAll();
 
+	WeaponEntity findByName(String name);
+
 }

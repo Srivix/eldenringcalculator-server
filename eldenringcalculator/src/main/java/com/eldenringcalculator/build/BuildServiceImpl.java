@@ -168,9 +168,9 @@ public class BuildServiceImpl implements BuildService{
 	public ResponseEntity<?> save(Long id, BuildDto dto, String username) {
 		
 		BuildEntity build = null;
-		Map<String, Object> response = new HashMap<>();
-		
+		Map<String, Object> response = new HashMap<>();	
 		if(id == null) {
+
 			build = new BuildEntity();
 			
 			UserEntity user = userService.findByUsername(username);
